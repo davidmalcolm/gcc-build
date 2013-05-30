@@ -75,10 +75,10 @@ mpfr-$(MPFR_VERSION).tar.bz2:
 
 git-merge-changelog: /usr/local/bin/git-merge-changelog
 /usr/local/bin/git-merge-changelog:
-	git·clone·git://git.savannah.gnu.org/gnulib.git
-	(cd·gnulib \
-	  &&·./gnulib-tool·\
+	git clone git://git.savannah.gnu.org/gnulib.git
+	(cd gnulib \
+	  && ./gnulib-tool \
 	       --create-testdir \
-	       --dir=/tmp/testdir123·git-merge-changelog)
-	(cd·/tmp/testdir123·\
-	  &&·./configure·&&·make·&&·make·install)
+	       --dir=/tmp/testdir123 git-merge-changelog)
+	(cd /tmp/testdir123 \
+	  && ./configure && make && make install)
