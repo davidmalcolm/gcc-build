@@ -82,3 +82,7 @@ git-merge-changelog: /usr/local/bin/git-merge-changelog
 	       --dir=/tmp/testdir123 git-merge-changelog)
 	(cd /tmp/testdir123 \
 	  && ./configure && make && make install)
+	git config --global merge.merge-changelog.name "GNU-style ChangeLog merge driver"
+	git config --global merge.merge-changelog.driver "/usr/local/bin/git-merge-changelog %O %A %B"
+
+#echo "ChangeLog   merge=merge-changelog" >> ~/gcc-git/.git/info/attributes
