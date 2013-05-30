@@ -73,7 +73,7 @@ mpfr-$(MPFR_VERSION).tar.bz2:
 	wget ftp://gcc.gnu.org/pub/gcc/infrastructure/mpfr-$(MPFR_VERSION).tar.bz2
 
 
-git-merge-changelog:·/usr/local/bin/git-merge-changelog
+git-merge-changelog: /usr/local/bin/git-merge-changelog
 /usr/local/bin/git-merge-changelog:
 	git·clone·git://git.savannah.gnu.org/gnulib.git
 	(cd·gnulib \
