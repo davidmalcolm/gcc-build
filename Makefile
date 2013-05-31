@@ -38,7 +38,7 @@ s-gmp: gmp-$(GMP_VERSION).tar.bz2
 	  && make install \
 	) && touch $@
 
-s-mpc: mpc-$(MPC_VERSION).tar.gz s-mpc s-mpfr
+s-mpc: mpc-$(MPC_VERSION).tar.gz s-gmp s-mpfr
 	tar -zxf $<
 	(cd mpc-$(MPC_VERSION) \
 	  && ./configure --prefix=$(DEPDIR) --with-gmp=$(DEPDIR) \
