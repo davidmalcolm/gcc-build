@@ -17,6 +17,17 @@ systemdeps:
 	  texinfo \
 	  glibc-devel.i686
 
+# We need glibc-devel.i686 on x86_64, otherwise the build fails inside
+#   x86_64-unknown-linux-gnu/32/libgcc
+# with:
+#   In file included from /usr/include/features.h:385:0,
+#                    from /usr/include/stdio.h:28,
+#                    from ../../../../src/libgcc/../gcc/tsystem.h:87,
+#                    from ../../../../src/libgcc/libgcov.c:27:
+#   /usr/include/gnu/stubs.h:7:27: fatal error: gnu/stubs-32.h: No such file or directory
+#    # include <gnu/stubs-32.h>
+#                              ^
+
 deps: \
 	s-cloog \
 	s-gmp \
