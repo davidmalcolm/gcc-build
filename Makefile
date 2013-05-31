@@ -9,7 +9,7 @@ MPC_VERSION=0.8.1
 
 MPFR_VERSION=2.4.2
 
-all: systemdeps deps git-merge-changelog
+all: systemdeps deps git-merge-changelog gcc
 
 systemdeps:
 	yum install -y \
@@ -86,3 +86,6 @@ git-merge-changelog: /usr/local/bin/git-merge-changelog
 	git config --global merge.merge-changelog.driver "/usr/local/bin/git-merge-changelog %O %A %B"
 
 #echo "ChangeLog   merge=merge-changelog" >> ~/gcc-git/.git/info/attributes
+
+gcc:
+	git clone git://gcc.gnu.org/git/gcc.git
