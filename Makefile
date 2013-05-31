@@ -9,11 +9,11 @@ MPC_VERSION=0.8.1
 
 MPFR_VERSION=2.4.2
 
-all: systemdeps deps
+all: systemdeps deps git-merge-changelog
 
 systemdeps:
 	yum install -y \
-	  dejagnu
+	  dejagnu \
 	  texinfo
 
 deps: \
@@ -22,10 +22,10 @@ deps: \
 	s-mpc \
 	s-mpfr
 
-s-cloog: cloog-$(CLOOG_VERSION).tar.gz
+s-cloog: cloog-$(CLOOG_VERSION).tar.gz s-gmp
 	tar -zxf $<
 	(cd cloog-$(CLOOG_VERSION) \
-	  && ./configure --prefix=$(DEPDIR) \
+	  && ./configure --prefix=$(DEPDIR) --with-gmp-prefix=$(DEPDIR) \
 	  && make \
 	  && make install \
 	) && touch $@
@@ -38,18 +38,18 @@ s-gmp: gmp-$(GMP_VERSION).tar.bz2
 	  && make install \
 	) && touch $@
 
-s-mpc: mpc-$(MPC_VERSION).tar.gz
+s-mpc: mpc-$(MPC_VERSION).tar.gz s-mpc s-mpfr
 	tar -zxf $<
 	(cd mpc-$(MPC_VERSION) \
-	  && ./configure --prefix=$(DEPDIR) \
+	  && ./configure --prefix=$(DEPDIR) --with-gmp=$(DEPDIR) \
 	  && make \
 	  && make install \
 	) && touch $@
 
-s-mpfr: mpfr-$(MPFR_VERSION).tar.bz2
+s-mpfr: mpfr-$(MPFR_VERSION).tar.bz2 s-gmp
 	tar -jxf $<
 	(cd mpfr-$(MPFR_VERSION) \
-	  && ./configure --prefix=$(DEPDIR) \
+	  && ./configure --prefix=$(DEPDIR) --with-gmp=$(DEPDIR) \
 	  && make \
 	  && make install \
 	) && touch $@
