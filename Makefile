@@ -15,7 +15,8 @@ systemdeps:
 	yum install -y \
 	  dejagnu \
 	  texinfo \
-	  glibc-devel.i686
+	  glibc-devel.i686 \
+	  screen
 
 # We need glibc-devel.i686 on x86_64, otherwise the build fails inside
 #   x86_64-unknown-linux-gnu/32/libgcc

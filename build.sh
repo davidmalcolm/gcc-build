@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# It's best to run this under "screen"
+
 DEPDIR=$(pwd)/dep-prefix
 echo DEPDIR=$DEPDIR
 
