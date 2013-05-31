@@ -15,7 +15,10 @@ mkdir $EXPERIMENT
 
 make all
 
-J=-j16
+# Scale up by the number of cores available:
+J=-j$(cat /proc/cpuinfo | grep processor | wc -l)
+
+echo "J=$J"
 
 create_src()
 {
