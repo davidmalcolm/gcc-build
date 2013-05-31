@@ -14,7 +14,8 @@ all: systemdeps deps git-merge-changelog gcc
 systemdeps:
 	yum install -y \
 	  dejagnu \
-	  texinfo
+	  texinfo \
+	  glibc-devel.i686
 
 deps: \
 	s-cloog \
