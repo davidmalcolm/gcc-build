@@ -6,12 +6,12 @@ echo DEPDIR=$DEPDIR
 TESTDIR=$(pwd)/test
 CONTROL=$TESTDIR/control
 EXPERIMENT=$TESTDIR/experiment
-#rm -rf $TESTDIR
+rm -rf $TESTDIR
 mkdir $TESTDIR
 mkdir $CONTROL
 mkdir $EXPERIMENT
 
-make deps
+make all
 
 J=-j16
 
@@ -70,7 +70,7 @@ create_src $EXPERIMENT
 # Apply patches:
 for p in *.patch ; do
     OLD_PWD=$(pwd)
-    (cd $EXPERIMENT/src && git apply $OLD_PWD/$p)
+    (cd $EXPERIMENT/src && git apply $OLD_PWD/$p) || exit 1
 done
 
 create_build $CONTROL
