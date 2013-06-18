@@ -2,6 +2,12 @@
 
 # It's best to run this under "screen"
 
+# Options for profiling:
+EXTRA_CONFIG_OPTS=--enable-checking=release
+
+# Options for correctness testing:
+# EXTRA_CONFIG_OPTS=--enable-checking=all
+
 DEPDIR=$(pwd)/dep-prefix
 echo DEPDIR=$DEPDIR
 
@@ -42,7 +48,8 @@ create_build()
 	  --with-mpc=$DEPDIR \
 	  --with-mpfr=$DEPDIR \
 	  --with-gmp=$DEPDIR \
-	  --with-cloog=$DEPDIR
+	  --with-cloog=$DEPDIR \
+	  $EXTRA_CONFIG_OPTS
     ) || exit 1
 }
 
