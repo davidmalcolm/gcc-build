@@ -66,7 +66,7 @@ invoke_build()
     /usr/bin/time make $J || exit 1
 
     # Test suite:
-    /usr/bin/time make check $J || exit 1
+    /usr/bin/time make check $J
 }
 
 create_src $CONTROL
