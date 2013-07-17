@@ -21,3 +21,12 @@ mpfr-*
 
 # Install dir:
 dep-prefix/
+
+# Checkout of gcc:
+gcc/
+
+# Checkout of gnulib:
+gnulib/
+
+# Build dir:
+test/
