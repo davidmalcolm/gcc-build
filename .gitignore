@@ -1,0 +1,23 @@
+# Backups:
+*~
+
+# Stamp files:
+s-cloog
+s-gmp
+s-mpc
+s-mpfr
+
+# Tarballs:
+cloog-*.tar.gz
+gmp-*.tar.bz2
+mpc-*.tar.gz
+mpfr-*.tar.bz2
+
+# Build dirs:
+cloog-*
+gmp-*
+mpc-*
+mpfr-*
+
+# Install dir:
+dep-prefix/
