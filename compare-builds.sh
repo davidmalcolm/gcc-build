@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source support.sh
+
 # Compare test results:
 $CONTROL/src/contrib/compare_tests \
   $CONTROL/build/gcc/testsuite \
