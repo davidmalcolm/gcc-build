@@ -72,6 +72,6 @@ invoke_build()
     /usr/bin/time make install $J || exit 1
 
     # Test suite:
-    /usr/bin/time make check $J
+    /usr/bin/time make check $J -k
 }
 
