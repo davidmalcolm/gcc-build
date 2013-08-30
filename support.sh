@@ -2,8 +2,11 @@
 
 # It's best to run this under "screen"
 
+# Vanilla upstream options:
+EXTRA_CONFIG_OPTS=
+
 # Options for profiling:
-EXTRA_CONFIG_OPTS=--enable-checking=release
+# EXTRA_CONFIG_OPTS=--enable-checking=release
 
 # Options for correctness testing:
 # EXTRA_CONFIG_OPTS=--enable-checking=all
