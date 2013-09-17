@@ -69,12 +69,12 @@ invoke_build()
     export LD_LIBRARY_PATH=$DEPDIR/lib:$LD_LIBRARY_PATH
 
     # Build:
-    /usr/bin/time make $J || exit 1
+    nice /usr/bin/time make $J || exit 1
 
     # Install:
-    /usr/bin/time make install $J || exit 1
+    nice /usr/bin/time make install $J || exit 1
 
     # Test suite:
-    /usr/bin/time make check $J -k
+    nice /usr/bin/time make check $J -k
 }
 
