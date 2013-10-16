@@ -4,6 +4,7 @@
 
 # Vanilla upstream options:
 EXTRA_CONFIG_OPTS=
+#EXTRA_CONFIG_OPTS="--enable-host-shared --enable-languages=jit"
 
 # Options for profiling:
 # EXTRA_CONFIG_OPTS=--enable-checking=release
@@ -69,7 +70,7 @@ invoke_build()
     export LD_LIBRARY_PATH=$DEPDIR/lib:$LD_LIBRARY_PATH
 
     # Build:
-    nice /usr/bin/time make $J || exit 1
+    nice /usr/bin/time make all $J || exit 1
 
     # Install:
     nice /usr/bin/time make install $J || exit 1
