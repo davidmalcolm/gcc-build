@@ -9,7 +9,7 @@ MPC_VERSION=0.8.1
 
 MPFR_VERSION=2.4.2
 
-all: systemdeps deps git-merge-changelog gcc
+all: systemdeps deps gcc
 
 systemdeps:
 	yum install -y \
@@ -84,21 +84,6 @@ mpc-$(MPC_VERSION).tar.gz:
 
 mpfr-$(MPFR_VERSION).tar.bz2:
 	wget ftp://gcc.gnu.org/pub/gcc/infrastructure/mpfr-$(MPFR_VERSION).tar.bz2
-
-
-git-merge-changelog: /usr/local/bin/git-merge-changelog
-/usr/local/bin/git-merge-changelog:
-	git clone git://git.savannah.gnu.org/gnulib.git
-	(cd gnulib \
-	  && ./gnulib-tool \
-	       --create-testdir \
-	       --dir=/tmp/testdir123 git-merge-changelog)
-	(cd /tmp/testdir123 \
-	  && ./configure && make && make install)
-	git config --global merge.merge-changelog.name "GNU-style ChangeLog merge driver"
-	git config --global merge.merge-changelog.driver "/usr/local/bin/git-merge-changelog %O %A %B"
-
-#echo "ChangeLog   merge=merge-changelog" >> ~/gcc-git/.git/info/attributes
 
 gcc:
 	git clone git://gcc.gnu.org/git/gcc.git
