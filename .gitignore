@@ -30,3 +30,6 @@ gnulib/
 
 # Build dir:
 test/
+
+# Manifest files:
+manifest-*.txt
