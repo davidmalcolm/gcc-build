@@ -47,12 +47,14 @@ create_build()
     mkdir $BASEDIR/$CONFIG
     mkdir $BASEDIR/$CONFIG/build
     mkdir $BASEDIR/$CONFIG/install
+    export LD_LIBRARY_PATH=$DEPDIR/lib:$LD_LIBRARY_PATH
     (cd $BASEDIR/$CONFIG/build \
      && ../../src/configure \
           --prefix=$BASEDIR/$CONFIG/install \
 	  --with-mpc=$DEPDIR \
 	  --with-mpfr=$DEPDIR \
 	  --with-gmp=$DEPDIR \
+          --with-isl=$DEPDIR \
 	  --with-cloog=$DEPDIR \
           --disable-multilib \
           --target=$CONFIG \
