@@ -4,8 +4,8 @@ source support.sh
 
 # Compare test results:
 $CONTROL/src/contrib/compare_tests \
-  $CONTROL/build \
-  $EXPERIMENT/build
+  $CONTROL/$CONFIG/build \
+  $EXPERIMENT/$CONFIG/build
 
 # For reference here are the 2*12=24 sum files that should be found:
 #  $ find test/*/build -name "*.sum"

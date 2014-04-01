@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./support.sh
+source ./support.sh $1
 
 mkdir $EXPERIMENT
 
@@ -16,6 +16,6 @@ for p in $(echo *.patch | sort); do
      && git commit -m"Experimental patch: $p") || exit
 done
 
-create_build $EXPERIMENT
+create_build $EXPERIMENT $CONFIG
 
-invoke_build $EXPERIMENT
+invoke_build $EXPERIMENT $CONFIG

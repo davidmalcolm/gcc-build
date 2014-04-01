@@ -2,6 +2,10 @@
 
 # It's best to run this under "screen"
 
+CONFIG=${1:-x86_64-unknown-linux-gnu}
+
+echo "CONFIG=$CONFIG"
+
 # Vanilla upstream options:
 EXTRA_CONFIG_OPTS=
 #EXTRA_CONFIG_OPTS="--enable-host-shared --enable-languages=jit"
@@ -37,18 +41,21 @@ create_src()
 create_build()
 {
     BASEDIR=$1
-    echo "create_build $BASEDIR"
-    rm -rf $BASEDIR/build
-    mkdir $BASEDIR/build
-    rm -rf $BASEDIR/install
-    mkdir $BASEDIR/install
-    (cd $BASEDIR/build \
-     && ../src/configure \
-          --prefix=$BASEDIR/install \
+    CONFIG=$2
+    echo "create_build $BASEDIR $CONFIG"
+    rm -rf $BASEDIR/$CONFIG
+    mkdir $BASEDIR/$CONFIG
+    mkdir $BASEDIR/$CONFIG/build
+    mkdir $BASEDIR/$CONFIG/install
+    (cd $BASEDIR/$CONFIG/build \
+     && ../../src/configure \
+          --prefix=$BASEDIR/$CONFIG/install \
 	  --with-mpc=$DEPDIR \
 	  --with-mpfr=$DEPDIR \
 	  --with-gmp=$DEPDIR \
 	  --with-cloog=$DEPDIR \
+          --disable-multilib \
+          --target=$CONFIG \
 	  $EXTRA_CONFIG_OPTS
     ) || exit 1
 }
@@ -64,8 +71,9 @@ create_build()
 invoke_build()
 {
     BASEDIR=$1
-    echo "invoke_build $BASEDIR"
-    cd $BASEDIR/build
+    CONFIG=$2
+    echo "invoke_build $BASEDIR $CONFIG"
+    cd $BASEDIR/$CONFIG/build
 
     export LD_LIBRARY_PATH=$DEPDIR/lib:$LD_LIBRARY_PATH
 
