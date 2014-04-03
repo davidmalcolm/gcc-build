@@ -1,0 +1,7 @@
+arm-linux-gnueabi
+i386-unknown-freebsd
+i686-pc-linux-gnu
+mipsisa64-elf
+powerpc64-unknown-linux-gnu
+sparc-sun-solaris2.10
+x86_64-unknown-linux-gnu

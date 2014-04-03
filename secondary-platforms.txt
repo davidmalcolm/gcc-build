@@ -1,0 +1,6 @@
+aarch64-elf
+i686-apple-darwin
+i686-pc-cygwin
+i686-mingw32
+powerpc-ibm-aix7.1.0.0
+s390x-linux-gnu
