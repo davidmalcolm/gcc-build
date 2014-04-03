@@ -4,18 +4,21 @@
 # Stamp files:
 s-cloog
 s-gmp
+s-isl
 s-mpc
 s-mpfr
 
 # Tarballs:
 cloog-*.tar.gz
 gmp-*.tar.bz2
+isl-*.tar.bz2
 mpc-*.tar.gz
 mpfr-*.tar.bz2
 
 # Build dirs:
 cloog-*
 gmp-*
+isl-*
 mpc-*
 mpfr-*
 
