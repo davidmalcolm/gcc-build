@@ -115,7 +115,7 @@ benchmark_linux()
     # For stap, user needs to be in group stapusr and stapdev, e.g.:
     #    sudo usermod david -a -G stapusr,stapdev
     #    newgrp stapdev # forcibly reload groups so as to be seen to be in stapdev
-    #    newgrp stapuse # likewise
+    #    newgrp stapusr # likewise
     #    newgrp    # ...and reset our primary group
     #    id        # ...to verify that we have the secondary group
 
