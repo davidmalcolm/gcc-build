@@ -1,0 +1,25 @@
+# SystemTap script to track the lifetimes of processes
+
+global start_time_by_pid;
+
+probe kprocess.exec {
+  start_time_by_pid[pid()] = gettimeofday_ns()
+}
+
+probe kprocess.exit {
+
+  printf("utime(ms): %i",
+         cputime_to_msecs(task_utime()));
+
+  pid_time_elapsed_ns = gettimeofday_ns() - start_time_by_pid[pid()];
+  delete start_time_by_pid[pid()];
+  printf(" lifetime(ns): %i",
+	 pid_time_elapsed_ns);
+
+  # These can get long, use:
+  #    stap -DMAXSTRINGLEN=10000
+  # to avoid buffer truncation
+  printf(" cmdline: %s\n",
+         cmdline_str());
+
+}

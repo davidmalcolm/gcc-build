@@ -4,6 +4,8 @@
 
 CONFIG=${1:-x86_64-unknown-linux-gnu}
 
+ORIG_PWD=$(pwd)
+
 echo "CONFIG=$CONFIG"
 
 # Vanilla upstream options:
@@ -16,10 +18,10 @@ EXTRA_CONFIG_OPTS=
 # Options for correctness testing:
 # EXTRA_CONFIG_OPTS=--enable-checking=all
 
-DEPDIR=$(pwd)/dep-prefix
+DEPDIR=$ORIG_PWD/dep-prefix
 echo DEPDIR=$DEPDIR
 
-TESTDIR=$(pwd)/test
+TESTDIR=$ORIG_PWD/test
 CONTROL=$TESTDIR/control
 EXPERIMENT=$TESTDIR/experiment
 
@@ -110,15 +112,43 @@ benchmark_linux()
     # Turn this down for a real run?
     BENCHMARK_JOBS=64
 
+    # For stap, user needs to be in group stapusr and stapdev, e.g.:
+    #    sudo usermod david -a -G stapusr,stapdev
+    #    newgrp stapdev # forcibly reload groups so as to be seen to be in stapdev
+    #    newgrp stapuse # likewise
+    #    newgrp    # ...and reset our primary group
+    #    id        # ...to verify that we have the secondary group
+
     export LD_LIBRARY_PATH=$DEPDIR/lib:$LD_LIBRARY_PATH
     export PATH_TO_TEST_GCC=$GCC_BASEDIR/$GCC_CONFIG/install/bin
     rm -rf $BENCHMARK_BUILD_DIR
     cp -a linux-3.9.1 $BENCHMARK_BUILD_DIR
-    cd $BENCHMARK_BUILD_DIR && \
-	(export PATH=$PATH_TO_TEST_GCC:$PATH
-         echo "Building with GCC version:"
-	 gcc --version && \
-	 make clean && \
-	 make allyesconfig && \
-	 /usr/bin/time make -j $BENCHMARK_JOBS) # use V=1 to debug
+
+    cd $BENCHMARK_BUILD_DIR
+
+    export PATH=$PATH_TO_TEST_GCC:$PATH
+    echo "Building with GCC version:"
+    gcc --version
+    make clean
+    make allyesconfig
+
+    echo $LD_LIBRARY_PATH
+
+    # Run the kernel's "make" under systemtap
+    #
+    # staprun is a setuid binary, and hence the environment is
+    # sanitized, deleting LD_LIBRARY_PATH, so we need to reinject it using
+    # "env" (we'll assume the gcc sources aren't trojaned).
+    #
+    # Append "V=1" to the make args to debug the build
+    {
+      stap \
+        -v \
+        -DMAXSTRINGLEN=10000 \
+        $ORIG_PWD/gcc-tracker.stp \
+        -c"env LD_LIBRARY_PATH=$LD_LIBRARY_PATH /usr/bin/time make -j $BENCHMARK_JOBS"
+    } | tee benchmark.log
+
+   # Generate reports on elapsed time:
+   python $ORIG_PWD/parse-benchmark-log.py $BENCHMARK_BUILD_DIR
 }
