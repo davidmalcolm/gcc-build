@@ -90,3 +90,35 @@ invoke_build()
     (nice /usr/bin/time make check $J -k ) | tee make-check.log
 }
 
+benchmark_linux()
+{
+    GCC_BASEDIR=$1
+    GCC_CONFIG=$2
+    BENCHMARK_NAME=linux-3.9.1
+
+    # Such builds should be done with --enable-checking=release
+    # e.g. via:
+    #   EXTRA_CONFIG_OPTS=--enable-checking=release
+    # above
+
+    BENCHMARK_BUILD_DIR=$GCC_BASEDIR/$GCC_CONFIG/$BENCHMARK_NAME
+    echo "Benchmarking within $BENCHMARK_BUILD_DIR"
+
+    # Ensure we have the source downloaded and unpacked:
+    make linux-3.9.1
+
+    # Turn this down for a real run?
+    BENCHMARK_JOBS=64
+
+    export LD_LIBRARY_PATH=$DEPDIR/lib:$LD_LIBRARY_PATH
+    export PATH_TO_TEST_GCC=$GCC_BASEDIR/$GCC_CONFIG/install/bin
+    rm -rf $BENCHMARK_BUILD_DIR
+    cp -a linux-3.9.1 $BENCHMARK_BUILD_DIR
+    cd $BENCHMARK_BUILD_DIR && \
+	(export PATH=$PATH_TO_TEST_GCC:$PATH
+         echo "Building with GCC version:"
+	 gcc --version && \
+	 make clean && \
+	 make allyesconfig && \
+	 /usr/bin/time make -j $BENCHMARK_JOBS) # use V=1 to debug
+}

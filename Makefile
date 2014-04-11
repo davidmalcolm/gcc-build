@@ -125,3 +125,24 @@ mpfr-$(MPFR_VERSION).tar.bz2:
 
 gcc:
 	git clone git://gcc.gnu.org/git/gcc.git
+
+############################################################################
+# Targets to help with benchmarking GCC builds
+#
+# These require PATH_TO_TEST_GCC to point to an install dir
+# e.g.:
+#   make benchmark-linux-3.9.1 \
+#      PATH_TO_TEST_GCC=~/coding/gcc-python/gcc-svn-4.6/install/bin
+#
+############################################################################
+
+############################################################################
+# linux-3.9.1:
+############################################################################
+
+# 69MB
+linux-3.9.1.tar.xz:
+	wget https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.9.1.tar.xz
+
+linux-3.9.1: linux-3.9.1.tar.xz
+	tar -Jxf linux-3.9.1.tar.xz
