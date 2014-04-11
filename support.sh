@@ -58,6 +58,7 @@ create_build()
 	  --with-cloog=$DEPDIR \
           --disable-multilib \
           --target=$CONFIG \
+          --enable-languages=all,ada,go \
 	  $EXTRA_CONFIG_OPTS
     ) || exit 1
 }
