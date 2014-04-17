@@ -1,5 +1,6 @@
 #!/bin/bash
 source support.sh $1
+./strip-binaries.sh
 export LD_LIBRARY_PATH=$DEPDIR/lib:$LD_LIBRARY_PATH
 for i in {1..10}; do
   echo "i: $i"
