@@ -20,22 +20,24 @@ class GccLog:
                     self.stats = Stats(*[float(f) for f in m.groups()])
 
 TESTS = ['kdecore.cc', 'big-code.c']
-CONFIGS = ['control', 'experiment']
+GROUPS = ['control', 'experiment']
+CONFIGS = ['x86_64-unknown-linux-gnu']
 logfiles = {}
 for test in TESTS:
-    for config in CONFIGS:
-        logfiles[(test, config)] = []
+    for group in GROUPS:
+        for config in CONFIGS:
+            logfiles[(test, group, config)] = []
 
-for g in glob("log-*.txt"):
-    m = re.match('log-(.+)-(.+)-([0-9]+).txt', g)
-    test, config, index = m.groups()
+for g in glob("test/*/*/log-*.txt"):
+    m = re.match('test/(.+)/(.+)/log-(.+)-([0-9]+).txt', g)
+    group, config, test, index = m.groups()
     index = int(index)
-    logfiles[(test, config)].append( (index, g) )
+    logfiles[(test, group, config)].append( (index, g) )
 
 for test in TESTS:
-    for config in CONFIGS:
-        logfiles[(test, config)] = [path
-                                    for index, path in sorted(logfiles[(test, config)])]
+    for group in GROUPS:
+        logfiles[(test, group, config)] = [path
+                                           for index, path in sorted(logfiles[(test, group, config)])]
 
 class Options:
     def __init__(self, benchmark_name):
@@ -46,28 +48,30 @@ class Options:
 
 logs = {}
 for test in TESTS:
-    for config in CONFIGS:
-        logs[(test, config)] = []
-        for logfile in logfiles[(test, config)]:
-            log = GccLog(logfile)
-            logs[(test, config)].append(log)
+    for group in GROUPS:
+        for config in CONFIGS:
+            logs[(test, group, config)] = []
+            for logfile in logfiles[(test, group, config)]:
+                log = GccLog(logfile)
+                logs[(test, group, config)].append(log)
 
 for test in TESTS:
-    for stat_field in STAT_FIELDS:
-        benchmark_name = '%s -O3: %s' % (test, stat_field)
-        data = {}
-        for config in CONFIGS:
-            data[config] = [getattr(log.stats, stat_field)
-                            for log in logs[(test, config)]]
-        print(benchmark_name)
-        for config in CONFIGS:
-            print('   %10s: %s' % (config, data[config]))
-        if stat_field == 'ggc':
-            print(perf.CompareMemoryUsage(data['control'],
-                                          data['experiment'],
-                                          Options(benchmark_name)))
-        else:
-            print(perf.CompareMultipleRuns(data['control'],
-                                           data['experiment'],
-                                           Options(benchmark_name)))
-        print('')
+    for config in CONFIGS:
+        for stat_field in STAT_FIELDS:
+            benchmark_name = 'Compilation of %s at -O3 for %s: %s' % (test, config, stat_field)
+            data = {}
+            for group in GROUPS:
+                data[group] = [getattr(log.stats, stat_field)
+                                for log in logs[(test, group, config)]]
+            print(benchmark_name)
+            for group in GROUPS:
+                print('   %10s: %s' % (group, data[group]))
+            if stat_field == 'ggc':
+                print(perf.CompareMemoryUsage(data['control'],
+                                              data['experiment'],
+                                              Options(benchmark_name)))
+            else:
+                print(perf.CompareMultipleRuns(data['control'],
+                                               data['experiment'],
+                                               Options(benchmark_name)))
+            print('')
