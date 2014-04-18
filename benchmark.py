@@ -58,7 +58,7 @@ for test in TESTS:
 for test in TESTS:
     for config in CONFIGS:
         for stat_field in STAT_FIELDS:
-            benchmark_name = 'Compilation of %s at -O3 for %s: %s' % (test, config, stat_field)
+            benchmark_name = 'Compilation of %s at -O3 with -g for %s: %s' % (test, config, stat_field)
             data = {}
             for group in GROUPS:
                 data[group] = [getattr(log.stats, stat_field)

@@ -7,7 +7,7 @@ for i in {1..10}; do
   for src in kdecore.cc big-code.c ; do
     for which in control experiment ; do
       echo "generating test/$which/$CONFIG/log-$src-$i.txt"
-      (test/$which/$CONFIG/build/gcc/cc1plus -O3 $src 2>&1) > test/$which/$CONFIG/log-$src-$i.txt
+      (test/$which/$CONFIG/build/gcc/cc1plus -O3 -g $src 2>&1) > test/$which/$CONFIG/log-$src-$i.txt
     done
   done
 done
