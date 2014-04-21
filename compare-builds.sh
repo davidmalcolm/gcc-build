@@ -3,7 +3,7 @@
 source support.sh
 
 # Compare test results:
-$CONTROL/src/contrib/compare_tests \
+../jamais-vu/jv compare  \
   $CONTROL/$CONFIG/build \
   $EXPERIMENT/$CONFIG/build
 
