@@ -7,7 +7,7 @@ source support.sh
   $CONTROL/$CONFIG/build \
   $EXPERIMENT/$CONFIG/build
 
-# For reference here are the 2*12=24 sum files that should be found:
+# For reference here are the 2*16=32 sum files that should be found:
 #  $ find test/*/x86_64-unknown-linux-gnu/build -name "*.sum" | sort
 #  test/control/x86_64-unknown-linux-gnu/build/gcc/testsuite/ada/acats/acats.sum
 #  test/control/x86_64-unknown-linux-gnu/build/gcc/testsuite/gcc/gcc.sum
@@ -15,6 +15,7 @@ source support.sh
 #  test/control/x86_64-unknown-linux-gnu/build/gcc/testsuite/g++/g++.sum
 #  test/control/x86_64-unknown-linux-gnu/build/gcc/testsuite/gnat/gnat.sum
 #  test/control/x86_64-unknown-linux-gnu/build/gcc/testsuite/go/go.sum
+#  test/control/x86_64-unknown-linux-gnu/build/gcc/testsuite/obj-c++/obj-c++.sum
 #  test/control/x86_64-unknown-linux-gnu/build/gcc/testsuite/objc/objc.sum
 #  test/control/x86_64-unknown-linux-gnu/build/x86_64-unknown-linux-gnu/boehm-gc/testsuite/boehm-gc.sum
 #  test/control/x86_64-unknown-linux-gnu/build/x86_64-unknown-linux-gnu/libatomic/testsuite/libatomic.sum
@@ -30,6 +31,7 @@ source support.sh
 #  test/experiment/x86_64-unknown-linux-gnu/build/gcc/testsuite/g++/g++.sum
 #  test/experiment/x86_64-unknown-linux-gnu/build/gcc/testsuite/gnat/gnat.sum
 #  test/experiment/x86_64-unknown-linux-gnu/build/gcc/testsuite/go/go.sum
+#  test/experiment/x86_64-unknown-linux-gnu/build/gcc/testsuite/obj-c++/obj-c++.sum
 #  test/experiment/x86_64-unknown-linux-gnu/build/gcc/testsuite/objc/objc.sum
 #  test/experiment/x86_64-unknown-linux-gnu/build/x86_64-unknown-linux-gnu/boehm-gc/testsuite/boehm-gc.sum
 #  test/experiment/x86_64-unknown-linux-gnu/build/x86_64-unknown-linux-gnu/libatomic/testsuite/libatomic.sum
