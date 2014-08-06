@@ -38,6 +38,9 @@ create_src()
     echo "create_src $BASEDIR"
     rm -rf $BASEDIR/src
     cp -a gcc $BASEDIR/src
+    (cd $BASEDIR/src &&
+        git config user.email "dmalcolm@redhat.com" &&
+        git config user.name "David Malcolm" )
 }
 
 create_build()
