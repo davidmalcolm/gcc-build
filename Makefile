@@ -14,7 +14,7 @@ ISL_VERSION=0.12.2
 
 # "Chunky Loop Generator"
 # (this bundles isl-0.11.1, but we want a "system" ISL as noted above)
-CLOOG_VERSION=0.18.0
+CLOOG_VERSION=0.18.1
 
 GMP_VERSION=4.3.2
 
