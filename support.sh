@@ -2,7 +2,7 @@
 
 # It's best to run this under "screen"
 
-CONFIG=${1:-x86_64-unknown-linux-gnu}
+CONFIG=${1:-x86_64-pc-linux-gnu}
 
 ORIG_PWD=$(pwd)
 
