@@ -6,7 +6,7 @@ mkdir $EXPERIMENT
 create_src $EXPERIMENT
 
 # Apply patches:
-for p in $(echo *.patch | grep -v 0000-cover-letter.patch | sort); do
+for p in $(ls *.patch | grep -v 0000-cover-letter.patch | sort); do
     OLD_PWD=$(pwd)
     echo "Applying patch $p"
     # "git apply --index" doesn't seem to work
