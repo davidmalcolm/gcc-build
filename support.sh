@@ -88,17 +88,17 @@ invoke_build()
     # Build:
     {
         nice /usr/bin/time make all $J || exit 1
-    } | tee make.log
+    } 2>&1 | tee make.log
 
     # Install:
     {
         nice /usr/bin/time make install $J || exit 1
-    } | tee make-install.log
+    } 2>&1 | tee make-install.log
 
     # Test suite:
     {
         nice /usr/bin/time make check $J -k RUNTESTFLAGS="-v"
-    } | tee make-check.log
+    } 2>&1 | tee make-check.log
 }
 
 benchmark_linux()
