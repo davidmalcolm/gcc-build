@@ -63,7 +63,8 @@ create_build()
 	  --with-cloog=$DEPDIR \
           --disable-multilib \
           --target=$CONFIG \
-          --enable-languages=c,c++,objc,obj-c++,java,fortran,ada,go,lto \
+          --enable-host-shared \
+          --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto,jit \
 	  $EXTRA_CONFIG_OPTS
     ) || exit 1
 }
