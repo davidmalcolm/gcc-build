@@ -28,7 +28,8 @@ EXPERIMENT=$TESTDIR/experiment
 make all
 
 # Scale up by the number of cores available:
-J=-j$(cat /proc/cpuinfo | grep processor | wc -l)
+NUM_CORES=$(cat /proc/cpuinfo | grep processor | wc -l)
+J=-j$(expr $NUM_CORES / 2)
 
 echo "J=$J"
 
