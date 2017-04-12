@@ -99,7 +99,7 @@ invoke_build()
 
     # Test suite:
     {
-        nice /usr/bin/time make check $J -k RUNTESTFLAGS="-v"
+        nice -1 /usr/bin/time make check $J -k RUNTESTFLAGS="-v"
     } 2>&1 | tee make-check.log
 }
 
