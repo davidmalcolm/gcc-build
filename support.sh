@@ -29,7 +29,7 @@ make all
 
 # Scale up by the number of cores available:
 NUM_CORES=$(cat /proc/cpuinfo | grep processor | wc -l)
-J=-j$(expr $NUM_CORES / 2)
+J=-j$(expr $NUM_CORES / 4)
 
 echo "J=$J"
 
