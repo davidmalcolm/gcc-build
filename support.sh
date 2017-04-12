@@ -28,7 +28,8 @@ EXPERIMENT=$TESTDIR/experiment
 make all
 
 # Scale up by the number of cores available:
-J=-j$(cat /proc/cpuinfo | grep processor | wc -l)
+NUM_CORES=$(cat /proc/cpuinfo | grep processor | wc -l)
+J=-j$(expr $NUM_CORES / 4)
 
 echo "J=$J"
 
@@ -64,7 +65,7 @@ create_build()
           --disable-multilib \
           --target=$CONFIG \
           --enable-host-shared \
-          --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto,jit \
+          --enable-languages=c,c++,objc,obj-c++,fortran,ada,go,lto,jit,brig \
 	  $EXTRA_CONFIG_OPTS
     ) || exit 1
 }
@@ -98,7 +99,7 @@ invoke_build()
 
     # Test suite:
     {
-        nice /usr/bin/time make check $J -k RUNTESTFLAGS="-v"
+        nice -1 /usr/bin/time make check $J -k RUNTESTFLAGS="-v"
     } 2>&1 | tee make-check.log
 }
 
