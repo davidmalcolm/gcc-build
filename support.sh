@@ -163,3 +163,81 @@ benchmark_linux()
    # Generate reports on elapsed time:
    python $ORIG_PWD/parse-benchmark-log.py $BENCHMARK_BUILD_DIR
 }
+
+run_spec()
+{
+    NAME=$1
+    GCC_BASEDIR=$2
+    GCC_CONFIG=$3
+    echo "GCC_BASEDIR: $GCC_BASEDIR"
+    echo "GCC_CONFIG: $GCC_CONFIG"
+
+    export LD_LIBRARY_PATH=$DEPDIR/lib:$LD_LIBRARY_PATH
+
+    BIN_DIR=$GCC_BASEDIR/$GCC_CONFIG/install/bin
+
+    # FIXME
+    PATH_TO_SPEC=/home/david/coding-3/benchmarking/install/cpu2006
+    cd $PATH_TO_SPEC
+    source $PATH_TO_SPEC/shrc
+
+    SPEC_CONFIG=$GCC_BASEDIR/$GCC_CONFIG/gcc-build.cfg
+
+    # FIXME: generate a config
+    cat <<EOF > $SPEC_CONFIG
+ignore_errors = yes
+tune          = base
+ext           = $NAME
+reportable    = 1
+output_format = asc
+
+sw_compiler  = gcc-build: $NAME
+
+runlist = all
+
+default=default=default=default:
+
+makeflags = $J
+
+# Compiler selection
+CC           = $BIN_DIR/gcc
+CXX          = $BIN_DIR/g++
+FC           = $BIN_DIR/gfortran
+
+# Base optimization
+default=base=default=default:
+COPTIMIZE    = -O2 -fno-strict-aliasing
+CXXOPTIMIZE  = -O2 -fno-strict-aliasing
+FOPTIMIZE    = -O2 -fno-strict-aliasing
+
+# Portability Flags, for x86_64 linux
+
+default=base=default=default:
+PORTABILITY = -DSPEC_CPU_LP64
+CPORTABILITY = -std=gnu90
+
+400.perlbench=default=default=default:
+CPORTABILITY = -DSPEC_CPU_LINUX_X64
+
+462.libquantum=default=default=default:
+CPORTABILITY=  -DSPEC_CPU_LINUX
+
+464.h264ref=default=default=default:
+CPORTABILITY   = -std=gnu90 -fsigned-char
+
+483.xalancbmk=default=default=default:
+CXXPORTABILITY= -DSPEC_CPU_LINUX
+
+481.wrf=default=default=default:
+CPORTABILITY = -DSPEC_CPU_CASE_FLAG -DSPEC_CPU_LINUX
+
+482.sphinx3=default=default=default:
+CPORTABILITY   = -std=gnu90 -fsigned-char
+
+
+EOF
+
+    {
+        time runspec --config $SPEC_CONFIG
+    } 2>&1 | tee $GCC_BASEDIR/$GCC_CONFIG/build/spec.log
+}
