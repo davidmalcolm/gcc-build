@@ -219,6 +219,19 @@ CPORTABILITY = -std=gnu90
 400.perlbench=default=default=default:
 CPORTABILITY = -DSPEC_CPU_LINUX_X64
 
+450.soplex=default=default=default:
+# Workaround for:
+#  mpsinput.cc: In member function 'bool soplex::MPSInput::readLine()':
+#  mpsinput.cc:75:52: error: no match for 'operator==' (operand types are 'std::basic_istream<char>::__istream_type {aka std::basic_istream<char>}' and 'int')
+#            if (m_input.getline(m_buf, sizeof(m_buf)) == 0)
+#                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~
+CXXPORTABILITY = -std=gnu++98
+
+447.dealII=default=default=default:
+# Workaround for this in parameter_handler.cc:
+#   error: ISO C++ forbids comparison between pointer and integer [-fpermissive]
+CXXPORTABILITY = -fpermissive
+
 462.libquantum=default=default=default:
 CPORTABILITY=  -DSPEC_CPU_LINUX
 
