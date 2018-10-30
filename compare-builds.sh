@@ -5,7 +5,9 @@ source support.sh
 # Compare test results:
 ../jamais-vu/jv compare  \
   $CONTROL/$CONFIG/build \
-  $EXPERIMENT/$CONFIG/build
+  $EXPERIMENT/$CONFIG/build \
+  --old-source-path=$CONTROL/src \
+  --new-source-path=$EXPERIMENT/src
 
 # For reference here are the 2*16=32 sum files that should be found:
 #  $ find test/*/x86_64-unknown-linux-gnu/build -name "*.sum" | sort
