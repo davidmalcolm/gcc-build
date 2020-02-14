@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from collections import namedtuple
 from glob import glob
 from pprint import pprint
