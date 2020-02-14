@@ -787,7 +787,8 @@ def GetChart(base_data, changed_data, options, title, y_label,
                "chxl=0:%(x_axis_labels)s|2:||Iteration|3:||%(y_label)s&"
                "chtt=%(title)s"
                % locals())
-    return ShortenUrl(raw_url)
+    return raw_url
+    #return ShortenUrl(raw_url)
 
 
 def ShortenUrl(url):
