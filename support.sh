@@ -65,7 +65,7 @@ create_build()
           --disable-multilib \
           --target=$CONFIG \
           --enable-host-shared \
-          --enable-languages=c,c++,d,objc,obj-c++,fortran,ada,go,lto,jit,brig \
+          --enable-languages=c,c++,d,objc,obj-c++,fortran,ada,go,lto,jit,rust,m2 \
 	  $EXTRA_CONFIG_OPTS
     ) || exit 1
 }
