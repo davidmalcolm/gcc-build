@@ -103,6 +103,26 @@ invoke_build()
     } 2>&1 | tee make-check.log
 }
 
+invoke_integration_tests()
+{
+    BASEDIR=$1
+    CONFIG=$2
+    echo "invoke_build $BASEDIR $CONFIG"
+    # rm -rf $BASEDIR/$CONFIG/test
+    INTEGRATION_TESTS_DIR=$BASEDIR/$CONFIG/integration-tests
+    mkdir -p $INTEGRATION_TESTS_DIR
+    cd $INTEGRATION_TESTS_DIR
+    # Test:
+    {
+	export LD_LIBRARY_PATH=$DEPDIR/lib:$LD_LIBRARY_PATH
+	# FIXME:
+	nice ~/coding/gcc-analyzer-harness/test.py \
+	     --gcc-path=$BASEDIR/$CONFIG/install/bin/gcc \
+	     --downloads-dir=/home/david/coding/gcc-analyzer-harness/downloads \
+             --run-dir=$INTEGRATION_TESTS_DIR
+    } 2>&1 | tee integration-test.log
+}
+
 benchmark_linux()
 {
     GCC_BASEDIR=$1
